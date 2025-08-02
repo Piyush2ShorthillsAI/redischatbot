@@ -1,0 +1,91 @@
+Byte-compiled / optimized files
+
+pycache/
+*.pyc
+*.pyo
+*.pyd
+Virtual environment directories
+
+venv/
+env/
+.venv/
+.env/
+Package distribution and build files
+.env_template.txt
+.env.expample
+
+dist/
+build/
+*.egg-info/
+.eggs/
+IDE and Editor specific files
+PyCharm
+
+.idea/
+.vscode/
+IPython notebook checkpoints
+
+.ipynb_checkpoints
+Installer logs
+
+
+
+pip-log.txt
+pip-delete-this-directory.txt
+Sensitive data and configuration
+It's a common practice to ignore environment files.
+Never commit files with API keys or passwords.
+
+.env
+Database files
+
+db.sqlite3
+*.sqlite3-journal
+Compiled C extensions
+
+*.so
+Logs
+
+*.log
+Operating System files
+
+.DS_Store
+Thumbs.db
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Python specific logs and temporary files
+*.log
+*.tmp
+
+# Virtual environment
+venv/
+.venv/
+env/
+.env
+
+# Editor files
+.vscode/
+.idea/
+
+# Your specific sensitive file
+env_template.txt

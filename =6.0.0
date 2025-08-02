@@ -1,0 +1,12 @@
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: redis in /home/shtlp_0170/.local/lib/python3.10/site-packages (3.5.3)
+Collecting redis
+  Downloading redis-6.2.0-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: async-timeout>=4.0.3 in /home/shtlp_0170/.local/lib/python3.10/site-packages (from redis) (5.0.1)
+Downloading redis-6.2.0-py3-none-any.whl (278 kB)
+Installing collected packages: redis
+  Attempting uninstall: redis
+    Found existing installation: redis 3.5.3
+    Uninstalling redis-3.5.3:
+      Successfully uninstalled redis-3.5.3
+Successfully installed redis-6.2.0
