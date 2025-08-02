@@ -1,0 +1,1021 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "delete",
+      "description": "Delete a Redis key.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The key to delete."
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "type",
+      "description": "Returns the string representation of the type of the value stored at key",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The key to check."
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "expire",
+      "description": "Set an expiration time for a Redis key.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis key."
+          },
+          "expire_seconds": {
+            "type": "string",
+            "description": "Time in seconds after which the key should expire."
+          }
+        },
+        "required": [
+          "name",
+          "expire_seconds"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "rename",
+      "description": "Renames a Redis key from old_key to new_key.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "old_key": {
+            "type": "string",
+            "description": "The current name of the Redis key to rename."
+          },
+          "new_key": {
+            "type": "string",
+            "description": "The new name to assign to the key."
+          }
+        },
+        "required": [
+          "old_key",
+          "new_key"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "scan_keys",
+      "description": "Scan keys in the Redis database using the SCAN command (non-blocking, production-safe). \u26a0\ufe0f  IMPORTANT: This returns PARTIAL results from one iteration. Use scan_all_keys() to get ALL matching keys, or call this function multiple times with the returned cursor until cursor becomes 0. The SCAN command iterates through the keyspace in small chunks, making it safe to use on large databases without blocking other operations.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string",
+            "description": "Pattern to match keys against (default is \"*\" for all keys)."
+          },
+  
+          "count": {
+            "type": "string",
+            "description": "Hint for the number of keys to return per iteration (default 100). Redis may return more or fewer keys than this hint."
+          },
+          "cursor": {
+            "type": "string",
+            "description": "The cursor position to start scanning from (0 to start from beginning). To continue scanning, use the cursor value returned from previous call."
+          }
+        },
+        "required": [
+          "Common patterns",
+          "cursor"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "scan_all_keys",
+      "description": "Scan and return ALL keys matching a pattern using multiple SCAN iterations. This function automatically handles the SCAN cursor iteration to collect all matching keys. It's safer than KEYS * for large databases but will still collect all results in memory. \u26a0\ufe0f  WARNING: With very large datasets (millions of keys), this may consume significant memory. For large-scale operations, consider using scan_keys() with manual iteration instead.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string",
+            "description": "Pattern to match keys against (default is \"*\" for all keys)."
+          },
+          "batch_size": {
+            "type": "string",
+            "description": "Number of keys to scan per iteration (default 100)."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "zadd",
+      "description": "Add a member to a Redis sorted set with an optional expiration time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The sorted set key."
+          },
+          "score": {
+            "type": "number",
+            "description": "The score of the member."
+          },
+          "member": {
+            "type": "string",
+            "description": "The member to add."
+          },
+          "expiration": {
+            "type": "string",
+            "description": "Expiration time in seconds."
+          }
+        },
+        "required": [
+          "location",
+          "score",
+          "member",
+          "expiration"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "zrange",
+      "description": "Retrieve a range of members from a Redis sorted set.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The sorted set key."
+          },
+          "start": {
+            "type": "integer",
+            "description": "The starting index."
+          },
+          "end": {
+            "type": "integer",
+            "description": "The ending index."
+          },
+          "with_scores": {
+            "type": "string",
+            "description": "Whether to include scores in the result."
+          }
+        },
+        "required": [
+          "key",
+          "start",
+          "end",
+          "with_scores"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "zrem",
+      "description": "Remove a member from a Redis sorted set.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The sorted set key."
+          },
+          "member": {
+            "type": "string",
+            "description": "The member to remove."
+          }
+        },
+        "required": [
+          "location",
+          "member"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "lpush",
+      "description": "Push a value onto the left of a Redis list and optionally set an expiration time.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "rpush",
+      "description": "Push a value onto the right of a Redis list and optionally set an expiration time.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "lpop",
+      "description": "Remove and return the first element from a Redis list.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "rpop",
+      "description": "Remove and return the last element from a Redis list.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "lrange",
+      "description": "Get elements from a Redis list within a specific range.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "llen",
+      "description": "Get the length of a Redis list.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_indexes",
+      "description": "List of indexes in the Redis database",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_index_info",
+      "description": "Retrieve schema and information about a specific Redis index using FT.INFO.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "index_name": {
+            "type": "string",
+            "description": "The name of the index to retrieve information about."
+          }
+        },
+        "required": [
+          "index_name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_indexed_keys_number",
+      "description": "Retrieve the number of indexed keys by the index",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "index_name": {
+            "type": "string",
+            "description": "The name of the index to retrieve information about."
+          }
+        },
+        "required": [
+          "index_name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "create_vector_index_hash",
+      "description": "Create a Redis 8 vector similarity index using HNSW on a Redis hash. This function sets up a Redis index for approximate nearest neighbor (ANN) search using the HNSW algorithm and float32 vector embeddings.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "index_name": {
+            "type": "string",
+            "description": "The name of the Redis index to create. Unless specifically required, use the default name for the index."
+          },
+          "prefix": {
+            "type": "string",
+            "description": "The key prefix used to identify documents to index (e.g., 'doc:'). Unless specifically required, use the default prefix."
+          },
+          "vector_field": {
+            "type": "string",
+            "description": "The name of the vector field to be indexed for similarity search. Unless specifically required, use the default field name"
+          },
+          "dim": {
+            "type": "string",
+            "description": "The dimensionality of the vectors stored under the vector_field."
+          },
+          "distance_metric": {
+            "type": "string",
+            "description": "The distance function to use (e.g., 'COSINE', 'L2', 'IP')."
+          }
+        },
+        "required": [
+          "dim",
+          "distance_metric"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "vector_search_hash",
+      "description": "Perform a KNN vector similarity search using Redis 8 or later version on vectors stored in hash data structures.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query_vector": {
+            "type": "string",
+            "description": "List of floats to use as the query vector."
+          },
+          "index_name": {
+            "type": "string",
+            "description": "Name of the Redis index. Unless specifically specified, use the default index name."
+          },
+          "vector_field": {
+            "type": "string",
+            "description": "Name of the indexed vector field. Unless specifically required, use the default field name"
+          },
+          "k": {
+            "type": "string",
+            "description": "Number of nearest neighbors to return."
+          },
+          "return_fields": {
+            "type": "string",
+            "description": "List of fields to return (optional)."
+          }
+        },
+        "required": [
+          "query_vector",
+          "k"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "hset",
+      "description": "Set a field in a hash stored at key with an optional expiration time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis hash key."
+          },
+          "location": {
+            "type": "string",
+            "description": "The field name inside the hash."
+          },
+          "value": {
+            "type": "string",
+            "description": "The value to set."
+          },
+          "expire_seconds": {
+            "type": "string",
+            "description": "Optional; time in seconds after which the key should expire."
+          }
+        },
+        "required": [
+          "name",
+          "location",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "hget",
+      "description": "Get the value of a field in a Redis hash.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis hash key."
+          },
+          "key": {
+            "type": "string",
+            "description": "The field name inside the hash."
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "hdel",
+      "description": "Delete a field from a Redis hash.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis hash key."
+          },
+          "location": {
+            "type": "string",
+            "description": "The field name inside the hash."
+          }
+        },
+        "required": [
+          "name",
+          "location"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "hgetall",
+      "description": "Get all fields and values from a Redis hash.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis hash key."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "hexists",
+      "description": "Check if a field exists in a Redis hash.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis hash key."
+          },
+          "location": {
+            "type": "string",
+            "description": "The field name inside the hash."
+          }
+        },
+        "required": [
+          "name",
+          "location"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "set_vector_in_hash",
+      "description": "Store a vector as a field in a Redis hash.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis hash key."
+          },
+          "vector_field": {
+            "type": "string",
+            "description": "The field name inside the hash. Unless specifically required, use the default field name"
+          },
+          "vector": {
+            "type": "string",
+            "description": "The vector (list of numbers) to store in the hash."
+          }
+        },
+        "required": [
+          "name",
+          "vector"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_vector_from_hash",
+      "description": "Retrieve a vector from a Redis hash and convert it back from binary blob.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis hash key."
+          },
+          "vector_field": {
+            "type": "string",
+            "description": "The field name inside the hash. Unless specifically required, use the default field name"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "json_set",
+      "description": "Set a JSON value in Redis at a given path with an optional expiration time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis key where the JSON document is stored."
+          },
+          "path": {
+            "type": "string",
+            "description": "The JSON path where the value should be set."
+          },
+          "value": {
+            "type": "string",
+            "description": "The JSON value to store."
+          },
+          "expire_seconds": {
+            "type": "string",
+            "description": "Optional; time in seconds after which the key should expire."
+          }
+        },
+        "required": [
+          "name",
+          "path",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "json_get",
+      "description": "Retrieve a JSON value from Redis at a given path.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis key where the JSON document is stored."
+          },
+          "path": {
+            "type": "string",
+            "description": "The JSON path to retrieve (default: root '$')."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "json_del",
+      "description": "Delete a JSON value from Redis at a given path.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis key where the JSON document is stored."
+          },
+          "path": {
+            "type": "string",
+            "description": "The JSON path to delete (default: root '$')."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "dbsize",
+      "description": "Get the number of keys stored in the Redis database",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "info",
+      "description": "Get Redis server information and statistics.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "section": {
+            "type": "string",
+            "description": "The section of the info command (default, memory, cpu, etc.)."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "client_list",
+      "description": "Get a list of connected clients to the Redis server.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "xadd",
+      "description": "Add an entry to a Redis stream with an optional expiration time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The stream key."
+          },
+          "fields": {
+            "type": "object",
+            "description": "The fields and values for the stream entry."
+          },
+          "expiration": {
+            "type": "string",
+            "description": "Expiration time in seconds."
+          }
+        },
+        "required": [
+          "location",
+          "fields",
+          "expiration"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "xrange",
+      "description": "Read entries from a Redis stream.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The stream key."
+          },
+          "count": {
+            "type": "string",
+            "description": "Number of entries to retrieve."
+          }
+        },
+        "required": [
+          "location",
+          "count"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "xdel",
+      "description": "Delete an entry from a Redis stream.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The stream key."
+          },
+          "entry_id": {
+            "type": "string",
+            "description": "The ID of the entry to delete."
+          }
+        },
+        "required": [
+          "location",
+          "entry_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "publish",
+      "description": "Publish a message to a Redis channel.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "The Redis channel to publish to."
+          },
+          "message": {
+            "type": "string",
+            "description": "The message to send."
+          }
+        },
+        "required": [
+          "channel",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "subscribe",
+      "description": "Subscribe to a Redis channel.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "The Redis channel to subscribe to."
+          }
+        },
+        "required": [
+          "channel"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "unsubscribe",
+      "description": "Unsubscribe from a Redis channel.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "The Redis channel to unsubscribe from."
+          }
+        },
+        "required": [
+          "channel"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "sadd",
+      "description": "Add a value to a Redis set with an optional expiration time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis set key."
+          },
+          "value": {
+            "type": "string",
+            "description": "The value to add to the set."
+          },
+          "expire_seconds": {
+            "type": "string",
+            "description": "Optional; time in seconds after which the set should expire."
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "srem",
+      "description": "Remove a value from a Redis set.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis set key."
+          },
+          "value": {
+            "type": "string",
+            "description": "The value to remove from the set."
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "smembers",
+      "description": "Get all members of a Redis set.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The Redis set key."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "set",
+      "description": "Set a Redis string value with an optional expiration time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The key to set."
+          },
+          "value": {
+            "type": "string",
+            "description": "The value to store."
+          },
+          "expiration": {
+            "type": "string",
+            "description": "Expiration time in seconds."
+          }
+        },
+        "required": [
+          "location",
+          "value",
+          "expiration"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get",
+      "description": "Get a Redis string value.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The key to retrieve."
+          }
+        },
+        "required": [
+          "location"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+]
