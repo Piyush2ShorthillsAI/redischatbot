@@ -248,15 +248,8 @@
             "description": "The Redis list key."
           },
           "value": {
-            "description": "The value to push onto the list.",
-            "oneOf": [
-              { "type": "string" },
-              { "type": "number" },
-              { "type": "boolean" },
-              { "type": "array" },
-              { "type": "object" },
-              { "type": "null" }
-            ]
+            "type": "string",
+            "description": "The value to push onto the list."
           },
           "expire": {
             "type": "integer",
@@ -281,15 +274,8 @@
             "description": "The Redis list key."
           },
           "value": {
-            "description": "The value to push onto the list.",
-            "oneOf": [
-              { "type": "string" },
-              { "type": "number" },
-              { "type": "boolean" },
-              { "type": "array" },
-              { "type": "object" },
-              { "type": "null" }
-            ]
+            "type": "string",
+            "description": "The value to push onto the list."
           },
           "expire": {
             "type": "integer",
@@ -716,15 +702,8 @@
             "description": "The JSON path where the value should be set."
           },
           "value": {
-            "description": "The JSON value to store.",
-            "oneOf": [
-              { "type": "string" },
-              { "type": "number" },
-              { "type": "boolean" },
-              { "type": "array" },
-              { "type": "object" },
-              { "type": "null" }
-            ]
+            "type": "string",
+            "description": "The JSON value to store."
           },
           "expire_seconds": {
             "type": "integer",
@@ -1059,7 +1038,7 @@
             "description": "The key to set."
           },
           "value": {
-            "type": ["string", "number", "boolean", "array", "object"],
+            "type":"string",
             "description": "The value to store."
           },
           "expiration": {
