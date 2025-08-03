@@ -259,7 +259,7 @@ class RedisVectorManager:
         """Generate intelligent response based on query and MCP tool results"""
         results = {"search_results": [], "redis_info": {}, "action_taken": "none"}
         results["search_results"] = await self.vector_search(query, k=5)
-        print("2")
+        
         results["action_taken"] = "vector_search"
         try:
             # Prepare context from MCP results
@@ -331,17 +331,17 @@ class IntelligentChatbot:
             if not tool_calls:
                 ans = await self.redis_manager.generate_response(query)
                 messages.append({"role": "assistant", "content": ans})
-                print("1")
+                
                 final_response = self.openai_client.chat.completions.create(
                     model=self.redis_manager.deployment_name,
                     messages=messages,
                 )
                 print(f"Final response: {final_response.choices[0].message.content}")
-                print("4")
+                
                 return final_response.choices[0].message.content
             # Step 2: Check if the LLM wants to call a tool
             elif tool_calls:
-                messages.append(response_message)
+                # messages.append(response_message)
                 
                 # Step 3: Call the tool and append the result
                 for tool_call in tool_calls:
@@ -455,17 +455,24 @@ class IntelligentChatbot:
                             if hasattr(function_response, '__iter__') and not isinstance(function_response, (str, dict)):
                                 # Convert iterables (like generators) to lists
                                 function_response = list(function_response)
-                            # if function_name == "vector_search_hash":
-                            #     # If the function returns a list of results, convert to JSON serializable format
-                            #     messages.append({
-                            #     "tool_call_id": tool_call.id,
-                            #     "role": "tool",
-                            #     "name": function_name
-                            #     })
-                            #     messages += function_response
-                            # else:
-                        
-                            messages.append({
+                           
+                            if not function_response:
+                                print("1")
+                                ans1 = await self.redis_manager.generate_response(query)
+                                messages.append({"role": "assistant", "content": ans1})
+                                print("2")
+                                final_response1 = self.openai_client.chat.completions.create(
+                                model=self.redis_manager.deployment_name,
+                                messages=messages,
+                                )
+                                print("4")
+                                print(f"Final response: {final_response1.choices[0].message.content}")
+                                print("5")
+                                return final_response1.choices[0].message.content
+                            else:
+                               print("6")
+                               messages.append(response_message)
+                               messages.append({
                                 "tool_call_id": tool_call.id,
                                 "role": "tool",
                                 "name": function_name,
@@ -481,12 +488,13 @@ class IntelligentChatbot:
                                 "name": function_name,
                                 "content": f"Error: {str(e)}"
                             })
-
+                print("7")
                 # Step 4: Get a final response from the LLM with tool output
                 final_response = self.openai_client.chat.completions.create(
                     model=self.redis_manager.deployment_name,
                     messages=messages,
                 )
+                print("8")
                 return final_response.choices[0].message.content
             else:
                 # No tool call, just a regular conversational response
