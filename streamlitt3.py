@@ -61,7 +61,7 @@ load_dotenv()
 
 # Load tools from a JSON file (assuming this file exists)
 try:
-    with open('redis_mcp_tools_openai.json', 'r') as f:
+    with open('redis_mcp_tools_openai_final.json', 'r') as f:
         OA_TOOLS = json.load(f)
 except FileNotFoundError:
     st.error("❌ 'redis_mcp_tools_openai.json' not found. Please create this file with your tool definitions.")
@@ -305,27 +305,6 @@ class RedisVectorManager:
 
 
 class IntelligentChatbot:
-    """Chatbot with LLM that can call MCP tools intelligently"""
-    system_prompt = """
-Redis Database Assistant
-You are a helpful AI assistant with access to a Redis vector database.
-Respond ONLY with information retrieved from the connected Redis database using tools.
- 
-Rules:
-- Do NOT use training data or general knowledge.
-- Always search Redis before answering; never assume data is missing without checking.
-
-- Ignore queries unrelated to stored Redis data.
- 
-Tool Use:
-- Match query intent to correct tools (discovery, retrieval, stats, type check).
-- Use correct methods for data type; chain tools when needed.
-- Explore both key names and stored content.
-Provide a helpful, accurate response based on the available information. If no relevant data was found, explain this clearly and suggest how the user might get better results.         
-Always base answers solely on Redis data you retrieved.
-search all database if you will not found information.
-give data from redis database only.
-"""
     def __init__(self, redis_manager: RedisVectorManager, system_prompt):
         self.redis_manager = redis_manager
         self.openai_client = redis_manager.openai_client
@@ -379,7 +358,7 @@ give data from redis database only.
                             if function_name == "vector_search_hash":
                                 # Need to pass the user query for embedding
                                 #function_response = await function_to_call(query_vector)
-                                function_response = self.redis_manager.generate_response(query)
+                                function_response = await self.redis_manager.generate_response(query)
                                 
                             elif function_name == "hgetall":
                                 key = function_args["name"]
@@ -532,10 +511,14 @@ Tool Use:
 - Match query intent to correct tools (discovery, retrieval, stats, type check).
 - Use correct methods for data type; chain tools when needed.
 - Explore both key names and stored content.
+search doc keys carefully , search them and give results
 Provide a helpful, accurate response based on the available information. If no relevant data was found, explain this clearly and suggest how the user might get better results.         
 Always base answers solely on Redis data you retrieved.
-search all database if you will not found information.
-give data from redis database only.
+search doc keys carefully , search them and give results
+search from all keys carefully
+search from doc and doc: keys carefully go deeper and deeper
+search from doc: keys carefully
+search from all indexes deeper and deeper
 """
 class StreamlitApp:
     """Main Streamlit application"""
