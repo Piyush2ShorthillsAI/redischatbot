@@ -359,7 +359,8 @@ class IntelligentChatbot:
                                 # Need to pass the user query for embedding
                                 #function_response = await function_to_call(query_vector)
                                 function_response = await self.redis_manager.generate_response(query)
-                                
+                            elif function_name == "json_get":
+                                function_response = await self.redis_manager.generate_response(query)
                             elif function_name == "hgetall":
                                 key = function_args["name"]
                                 try:
